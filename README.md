@@ -88,6 +88,9 @@ Apart for controling we observe the magnitude of how much the joystick by mappin
 - enA (5 pin) and enB(9 pin) are connected to ENA and ENB pins of motor driver repectively.
 - a,b,c, and d are for IN1, IN2, IN3 and IN4 pins respectively.
 - But while initilizing we do it separate for the left motor and separate for the right motor.
+- The we set variable for the maximum and the minimum value of the input given by the transmitter by ch2_high and ch3_high and ch2_low and ch3_low respectively.
+- After that we assign polynomail value of output variable by ch2_poly and ch3_poly.
+- At the end we assign values for the original value of input given by trasmitter by original_ch2 and original_ch3
 
 **<ins>Setup</ins>**
  - In the setup we start with telling which pins will give input and which will give input according to left and right motor.
@@ -95,10 +98,51 @@ Apart for controling we observe the magnitude of how much the joystick by mappin
  - enA and enB are giving outputs to the ENA and ENB respectively for the magnitude of the voltage to be supplied.
  - a,b,c and d are respectively giving OUTPUT to IN1,IN2,IN3 and IN4.
 
+**<ins>polynomial()</ins>**
+
+We define a function such that the output given by the microprocessor to the en pins will be a polynomial function such that initially it increase slowly but later it increase rapidly. This function will help for better control because at intial there will be slow movement in bot but after certain magnitude when the bot will move fast.
+
+-It takes input of the original value from two different channels of the input given by the transmitter
+- Initialy we linerly map the input values of channel 3 and channel 2 to 0 to 255 so that we have a analog output
+- After that we assign values to ch2_poly and ch3_poly by putting the ch2 and ch3 value in polynomial function
+>Polynomial Output of Analog Value = (1/255) × (Linear Mapped Output the input given by Transmitter)<sup>2</sup>
+
 **<ins>Loop</ins>**
 - Inside the loop first we map the input given by transmitter which is 1800 to 1200 to -254 to 254 so that we can give analog output.
 - We used negative for negative pull of the joystick and positive for positive pull of joystick so that we can control the direction of the bot and can control at ease.
+- Then we define original_ch2 and original_ch3 as the original value given by the Transmitter to the receiver which will be used as input for polynomial(original_ch2,original_ch3) function
 - After that boundary conditions are defined because in experimental observation we observed that the input values varies due to technical and mechanical errors constantly varyind due to dynamic environment.
 - So to counter the above problem we defined set of boundary condition such that if the value is above 254 then the value of channel's input is 254 only and if it is less than -254 then the input in channel is -254 only.
 - After this we setup the conditions for motions of directions like FORWARD,BACKWARD,RIGHT,LEFT and STABLE(Beacuse at experimentation we observed that the bot was not stable at that so we specified the condition at else statment).
-- 
+- At the end we use polynomail function
+
+# Testing and Calibration
+
+After testing the bot will be able to do all the motions easily. But one has to calibrate according to the Transmitter they are using because every transmitter has different input values and they vary very frequently so the transmitter and mapping must be calibrated accordingly.
+
+# Performance Evaluation
+
+- The bot works good in plane surface and is very easy to control and very responsive to user's command
+- After some time the Motor Driver Overheats too much
+
+
+# Future Improvements
+
+There are many inprovements to be done in the bot
+- Using good equipments for building bot.
+- Reduction of weight
+- Writing a exponential function of mapping so that we have more control on the bot and can switch back to linear or polynomial according to need
+- More power from battery for more speed
+
+ # Conclusion
+
+The project was mostly successful. In this project we learn how the receiver and transmitter works and how wireless transmission of Radiowaves occur. And we learnt about functions like mapping and pulseIn and how to define a function. This bot has the special function such that on low inpur by user it moves slow but after certain point the speed increse very rapidly. This function allows better result and better control. This project overall teaches us of basic wireless transmission of signals and this ignites our mind to do more projects on transmitter and receiver.
+
+# Members
+
+- Dr. Subhankar Mishra (Faculty incharge of RoboTech Club) - Guidance for the Project
+- Sanat Kumar Behera (Captain) - Mechanical work of the project
+- Rikan Mahakur - Circuiting work of the project
+- Dadhichi Das - Coding work for project
+
+  # Joy Maa Kali
